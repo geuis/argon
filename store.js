@@ -1,4 +1,4 @@
-(function () {
+!(function (window, undefined) {
 
   var typeFlags = {
     'Number()': 'n|',
@@ -91,7 +91,11 @@
           }
 
           //store value with type hint
-          storeType.setItem(key, typeFlags[typeKey] + val);
+          try {
+            storeType.setItem(key, typeFlags[typeKey] + val);
+          } catch(err) {
+            return err;
+          }
         }
 
       },
@@ -115,6 +119,7 @@
   // safe to presume if a client has localStorage, also has sessionStorage
   var hasStorage = false;
   try {
+    var mod = 'modernizr';
     window.localStorage.setItem(mod, mod);
     window.localStorage.removeItem(mod);
     hasStorage = true;
@@ -123,11 +128,12 @@
   // ns (namespace) object stores should be set on
   window.store = function (ns) {
     if (!hasStorage) {
-      return throw new Error('localStorage/sessionStorage not available');
+      return new Error('localStorage/sessionStorage not available');
     } else {
       ns.store = storeBase(localStorage);
       ns.session = storeBase(sessionStorage);
+      return ns;
     }
   };
 
-})();
+})(window);
