@@ -1,4 +1,5 @@
-!(function (window, undefined) {
+(function (window, undefined) {
+  'use strict';
 
   var typeFlags = {
     'Number()': 'n|',
@@ -34,7 +35,7 @@
                   .split(',');
       var fnBody = val.slice(val.indexOf('{') + 1, val.lastIndexOf('}'));
 
-      var fn = new Function('return function ' + fnName + '(' + fnArgs.toString() + '){' + fnBody + '}');
+      var fn = new Function('return function ' + fnName + '(' + fnArgs.toString() + '){' + fnBody + '}'); /* jshint ignore: line */
       return fn();
     },
     'u|': function (val) {
@@ -43,11 +44,12 @@
     'l|': function (val) {
       return null;
     }
-  }
+  };
 
   var storeBase = function (storeType) {
 
     return {
+      // Get key value
       get: function (key) {
 
         if (!key) {
@@ -56,7 +58,7 @@
 
           // get value
           var data = storeType.getItem(key);
-          var typeHint = data.slice(0,2);
+          var typeHint = data.slice(0, 2);
 
           // convert to type
           data = convertFlag[typeHint](data.slice(2));
@@ -65,7 +67,8 @@
         }
 
       },
- 
+
+      // Set key value
       set: function (key, val) {
 
         // check argument length because val === undefined or null is valid
@@ -93,13 +96,14 @@
           //store value with type hint
           try {
             storeType.setItem(key, typeFlags[typeKey] + val);
-          } catch(err) {
+          } catch (err) {
             return err;
           }
         }
 
       },
 
+      // Remove specific key
       remove: function (key) {
         if (key === undefined) {
           return new Error('Key is required');
@@ -108,12 +112,13 @@
         }
       },
 
+      // Clear all keys
       clear: function () {
         storeType.clear();
       }
-    }
+    };
 
-  }
+  };
 
   // taken from modernizr
   // safe to presume if a client has localStorage, also has sessionStorage
@@ -123,17 +128,18 @@
     window.localStorage.setItem(mod, mod);
     window.localStorage.removeItem(mod);
     hasStorage = true;
-  } catch(e) {}
+  } catch (e) {}
 
-  // ns (namespace) object stores should be set on
-  window.store = function (ns) {
+  // Export to global namespace
+  window.argon = (function () {
     if (!hasStorage) {
       return new Error('localStorage/sessionStorage not available');
     } else {
-      ns.store = storeBase(localStorage);
-      ns.session = storeBase(sessionStorage);
-      return ns;
+      return {
+        local: storeBase(localStorage),
+        session: storeBase(sessionStorage)
+      };
     }
-  };
+  })();
 
 })(window);
