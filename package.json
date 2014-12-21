@@ -22,6 +22,7 @@
   "devDependencies": {
     "mocha": "^2.0.1",
     "mocha-phantomjs": "^3.5.2",
-    "phantomjs": "^1.9.13"
+    "phantomjs": "^1.9.13",
+    "should": "^4.4.1"
   }
 }
