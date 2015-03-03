@@ -1,0 +1,29 @@
+{
+  "name": "argon",
+  "main": "argon.js",
+  "version": "1.0",
+  "homepage": "https://github.com/geuis/argon",
+  "authors": [
+    "Charles <geuis.teses@gmail.com>"
+  ],
+  "description": "Native javascript data type serialization/deserialization for local and session storage",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "argon",
+    "variable",
+    "serialize",
+    "deserialize",
+    "localstorage",
+    "sessionstorage"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
