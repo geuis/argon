@@ -2,33 +2,33 @@
   'use strict';
 
   var typeFlags = {
-    'Number()': 'n|',
-    'String()': 's|',
-    'Boolean()': 'b|',
-    'Object()': 'o|',
-    'Array()': 'a|',
-    'Function()': 'f|',
-    'undefined': 'u|',
-    'null': 'l|'
+    'Number()': 'n',
+    'String()': 's',
+    'Boolean()': 'b',
+    'Object()': 'o',
+    'Array()': 'a',
+    'Function()': 'f',
+    'undefined': 'u',
+    'null': 'l'
   };
 
   var convertFlag = {
-    's|': function (val) {
+    's': function (val) {
       return val;
     },
-    'n|': function (val) {
+    'n': function (val) {
       return val * 1;
     },
-    'b|': function (val) {
+    'b': function (val) {
       return val === 'true' ? true : false;
     },
-    'o|': function (val) {
+    'o': function (val) {
       return JSON.parse(val);
     },
-    'a|': function (val) {
+    'a': function (val) {
       return JSON.parse(val);
     },
-    'f|': function (val) {
+    'f': function (val) {
       var fnName = val.slice(8, val.indexOf('('));
       var fnArgs = val.slice(val.indexOf('(') + 1, val.indexOf(')'))
                   .replace(' ', '')
@@ -38,10 +38,10 @@
       var fn = new Function('return function ' + fnName + '(' + fnArgs.toString() + '){' + fnBody + '}'); /* jshint ignore: line */
       return fn();
     },
-    'u|': function (val) {
+    'u': function (val) {
       return undefined;
     },
-    'l|': function (val) {
+    'l': function (val) {
       return null;
     }
   };
@@ -58,10 +58,10 @@
 
           // get value
           var data = storeType.getItem(key);
-          var typeHint = data.slice(0, 2);
+          var typeHint = data.slice(0, 1);
 
           // convert to type
-          data = convertFlag[typeHint](data.slice(2));
+          data = convertFlag[typeHint](data.slice(1));
  
           return data;
         }
@@ -89,7 +89,7 @@
             typeKey = val.constructor.toString().split(' ')[1];
           }
 
-          if (typeFlags[typeKey] === 'a|' || typeFlags[typeKey] === 'o|') {
+          if (typeFlags[typeKey] === 'a' || typeFlags[typeKey] === 'o') {
             val = JSON.stringify(val);
           }
 
@@ -100,7 +100,6 @@
             return err;
           }
         }
-
       },
 
       // Remove specific key

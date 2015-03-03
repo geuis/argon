@@ -1,3 +1,4 @@
+// global window
 describe('Argon test suite', function () {
   beforeEach(function (done) {
     window.localStorage.clear();
@@ -35,7 +36,7 @@ describe('Argon test suite', function () {
     // sure both work.
     it('set should store a value', function (done) {
       window.argon.local.set('abc', 123);
-      window.localStorage['abc'].should.equal('n|123');
+      window.localStorage['abc'].should.equal('n123');
       done();
     });
 
