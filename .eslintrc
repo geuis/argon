@@ -1,0 +1,31 @@
+{
+  "env": {
+    "browser": 1,
+    "node": 1
+  },
+  "globals": {
+    "jQuery": 1,
+    "$": 1,
+    "_gaq": 1,
+    "_ga": 1,
+    "angular": 1,
+    "__base": 1,
+    "__app": 1
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [2, {"vars": "all", "args": "none"}],
+    "brace-style": [2, "1tbs", { "allowSingleLine": false }],
+    "consistent-this": [2, "self"],
+    "eol-last": 2,
+    "space-in-parens": [2, "never"],
+    "space-before-function-paren": [2, "always"],
+    "dot-location": [2, "property"],
+    "dot-notation": [2, {"allowKeywords": true, "allowPattern": ""}],
+    "no-extend-native": [2],
+    "linebreak-style": [2, "unix"],
+    "operator-linebreak": [2, "after"],
+    "quotes": [2, "single", "avoid-escape"]
+  }
+}

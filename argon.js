@@ -1,6 +1,6 @@
-(function (window, undefined) {
-  'use strict';
+'use strict';
 
+(function (window) {
   var typeFlags = {
     'Number()': 'n',
     'String()': 's',
@@ -31,11 +31,12 @@
     'f': function (val) {
       var fnName = val.slice(8, val.indexOf('('));
       var fnArgs = val.slice(val.indexOf('(') + 1, val.indexOf(')'))
-                  .replace(' ', '')
-                  .split(',');
+        .replace(' ', '')
+        .split(',');
       var fnBody = val.slice(val.indexOf('{') + 1, val.lastIndexOf('}'));
 
-      var fn = new Function('return function ' + fnName + '(' + fnArgs.toString() + '){' + fnBody + '}'); /* jshint ignore: line */
+      var fn = new Function('return function ' + fnName + // eslint-disable-line
+        '(' + fnArgs.toString() + '){' + fnBody + '}');
       return fn();
     },
     'u': function (val) {
@@ -47,30 +48,25 @@
   };
 
   var storeBase = function (storeType) {
-
     return {
       // Get key value
       get: function (key) {
-
         if (!key) {
           return new Error('Key is required');
         } else {
-
           // get value
           var data = storeType.getItem(key);
           var typeHint = data.slice(0, 1);
 
           // convert to type
           data = convertFlag[typeHint](data.slice(1));
- 
+
           return data;
         }
-
       },
 
       // Set key value
       set: function (key, val) {
-
         // check argument length because val === undefined or null is valid
         if (arguments.length < 2) {
           return new Error('Key and value are required');
@@ -127,7 +123,7 @@
     window.localStorage.setItem(mod, mod);
     window.localStorage.removeItem(mod);
     hasStorage = true;
-  } catch (e) {}
+  } catch (e) {} // eslint-disable-line
 
   // Export to global namespace
   window.argon = (function () {
