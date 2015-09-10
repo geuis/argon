@@ -1,7 +1,7 @@
 {
   "name": "argon",
   "main": "argon.js",
-  "version": "1.01",
+  "version": "1.0.1",
   "homepage": "https://github.com/geuis/argon",
   "authors": [
     "Charles <geuis.teses@gmail.com>"
