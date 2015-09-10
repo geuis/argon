@@ -54,12 +54,15 @@
         if (!key) {
           return new Error('Key is required');
         } else {
-          // get value
+          // get value. Return is always string or null
           var data = storeType.getItem(key);
-          var typeHint = data.slice(0, 1);
 
-          // convert to type
-          data = convertFlag[typeHint](data.slice(1));
+          if (!data === null) {
+            var typeHint = data.slice(0, 1);
+
+            // convert to type
+            data = convertFlag[typeHint](data.slice(1));
+          }
 
           return data;
         }
@@ -136,5 +139,4 @@
       };
     }
   })();
-
 })(window);
