@@ -57,7 +57,7 @@
           // get value. Return is always string or null
           var data = storeType.getItem(key);
 
-          if (!data === null) {
+          if (data !== null) {
             var typeHint = data.slice(0, 1);
 
             // convert to type
