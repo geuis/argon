@@ -1,6 +1,6 @@
 {
   "name": "argon",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "description": "Get/set actual data types in local and sessin storage in the browser.",
   "main": "argon.js",
   "directories": {
