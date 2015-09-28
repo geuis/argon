@@ -1,3 +1,8 @@
+/* global Should, describe, beforeEach, it */
+/* eslint no-unused-expressions:0, new-cap:0 */
+
+'use strict';
+
 // global window
 describe('Argon test suite', function () {
   beforeEach(function (done) {
@@ -30,13 +35,13 @@ describe('Argon test suite', function () {
       window.argon.local.remove.should.be.a.Function;
       window.argon.local.clear.should.be.a.Function;
       done();
-    })
+    });
 
     // local and session use the same code. So we only need to test one to make
     // sure both work.
     it('set should store a value', function (done) {
       window.argon.local.set('abc', 123);
-      window.localStorage['abc'].should.equal('n123');
+      window.localStorage.abc.should.equal('n123');
       done();
     });
 
@@ -63,7 +68,87 @@ describe('Argon test suite', function () {
       window.localStorage.length.should.equal(0);
       done();
     });
-
   });
 
+  describe('Types', function () {
+    it('should store and retrieve a number', function (done) {
+      var val = 1;
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Number;
+      done();
+    });
+
+    it('should store and retrieve a string', function (done) {
+      var val = 'abc';
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.String;
+      done();
+    });
+
+    it('should store and retrieve a boolean', function (done) {
+      var val = true;
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Boolean;
+      done();
+    });
+
+    it('should store and retrieve a string', function (done) {
+      var val = {};
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Object;
+      done();
+    });
+
+    it('should store and retrieve an array', function (done) {
+      var val = [];
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Array;
+      done();
+    });
+
+    it('should store and retrieve a date', function (done) {
+      var val = new Date();
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Date;
+      done();
+    });
+
+    it('should store and retrieve a function', function (done) {
+      var val = function () {};
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.Function;
+      done();
+    });
+
+    it('should store and retrieve a NaN', function (done) {
+      var val = NaN;
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      resp.should.be.NaN;
+      done();
+    });
+
+    it('should store and retrieve an undefined', function (done) {
+      var val;
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      Should(resp).equal(undefined);
+      done();
+    });
+
+    it('should store and retrieve a null', function (done) {
+      var val = null;
+      window.argon.local.set('key', val);
+      var resp = window.argon.local.get('key');
+      Should(resp).be.null;
+      done();
+    });
+  });
 });
